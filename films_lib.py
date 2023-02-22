@@ -84,8 +84,18 @@ def get_series():
     return sorted(series_list, key=lambda movie: movie.tittle)
 
 
+def search(film):
+    search_list = []
+    for i in films_catalogue:
+        if i.tittle == film:
+            search_list.append(i)
+    return search_list
+
+
 it = Movies('It', 1989, 'horror')
 simpsons = Series(1, 3, 'The Simpsons', 2000, 'comedy', )
+simpsons2 = Series(2, 3, 'The Simpsons', 2000, 'comedy', )
+mash = Series(1, 1, "M.A.S.H.", 1972, 'comedy')
 it.views = 10
 it.play(3)
 simpsons.play()
@@ -96,6 +106,8 @@ print(simpsons.views)
 # films_catalogue = []
 add_to_list(it)
 add_to_list(simpsons)
+add_to_list(simpsons2)
+add_to_list(mash)
 print(films_catalogue)
 # print(isinstance(it, Films))
 for i in films_catalogue:
@@ -104,3 +116,6 @@ for i in films_catalogue:
 get_movies()
 print(get_movies())
 print(get_series())
+print(search('It'))
+print(search('jakiś film'))
+print(search('The Simpsons'))
