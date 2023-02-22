@@ -148,8 +148,8 @@ if __name__ == "__main__":
     # print(search('jakiś film'))
     # print(search('The Simpsons'))
     generate_views_10()
-    # for i in films_catalogue:
-    #    print(i, i.views)
+    for i in films_catalogue:
+        print(i, i.views)
 
-    print("Biblioteka filmów %d rekordów \nNajpopularniejsze filmy i seriale dnia %s: \n %s" %
-          (len(films_catalogue), today, top_titles(3)))
+    print("Biblioteka filmów %d rekordów \nNajpopularniejsze filmy i seriale dnia %d.%02d.%d: \n %s" %
+          (len(films_catalogue), today.day, today.month, today.year, top_titles(3)))
