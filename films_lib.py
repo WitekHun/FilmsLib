@@ -1,3 +1,6 @@
+import random
+
+
 class Films:
     def __init__(self, tittle, year, genre):
         self.tittle = tittle
@@ -92,6 +95,18 @@ def search(film):
     return search_list
 
 
+def generate_views():
+    x = films_catalogue[random.randint(0, len(films_catalogue)-1)]
+    return x.play(random.randint(1, 100))
+
+
+def generate_views_10():
+    i = 0
+    while i <= 10:
+        i += 1
+        generate_views()
+
+
 it = Movies('It', 1989, 'horror')
 simpsons = Series(1, 3, 'The Simpsons', 2000, 'comedy', )
 simpsons2 = Series(2, 3, 'The Simpsons', 2000, 'comedy', )
@@ -119,3 +134,6 @@ print(get_series())
 print(search('It'))
 print(search('jakiś film'))
 print(search('The Simpsons'))
+generate_views_10()
+for i in films_catalogue:
+    print(i.views)
