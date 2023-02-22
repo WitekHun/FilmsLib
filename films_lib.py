@@ -64,6 +64,26 @@ def add_to_list(i):
     return films_catalogue
 
 
+def get_movies():
+    movies_list = []
+    for i in films_catalogue:
+        if isinstance(i, Movies):
+            movies_list.append(i)
+        else:
+            pass
+    return sorted(movies_list, key=lambda movie: movie.tittle)
+
+
+def get_series():
+    series_list = []
+    for i in films_catalogue:
+        if isinstance(i, Series):
+            series_list.append(i)
+        else:
+            pass
+    return sorted(series_list, key=lambda movie: movie.tittle)
+
+
 it = Movies('It', 1989, 'horror')
 simpsons = Series(1, 3, 'The Simpsons', 2000, 'comedy', )
 it.views = 10
@@ -81,3 +101,6 @@ print(films_catalogue)
 for i in films_catalogue:
     print("%s" % (i))
 # print(type(films_catalogue))
+get_movies()
+print(get_movies())
+print(get_series())
