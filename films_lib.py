@@ -1,4 +1,6 @@
 import random
+from datetime import date
+today = date.today()
 
 
 class Films:
@@ -47,10 +49,6 @@ class Series(Films):
 
 
 films_catalogue = []
-
-films_catalogue.append(Movies('Hellriser', 1989, 'horror'))
-
-# x = films_catalogue
 
 
 def add_to_list(i):
@@ -114,36 +112,44 @@ def top_titles(number):
 
 
 if __name__ == "__main__":
-
+    hellraiser = (Movies('Hellraiser', 1987, 'horror'))
     it = Movies('It', 1989, 'horror')
     simpsons = Series(1, 3, 'The Simpsons', 2000, 'comedy', )
     simpsons2 = Series(2, 3, 'The Simpsons', 2000, 'comedy', )
     mash = Series(1, 1, "M.A.S.H.", 1972, 'comedy')
-    it.views = 10
-    it.play(3)
-    simpsons.play()
-    print(it)
-    print(it.views)
-    print(simpsons)
-    print(simpsons.views)
+    pulp_fiction = Movies("Pulp Fiction", 1994, 'crime')
+    monty_python = Movies('Life of Brian', 1979, 'comedy')
+    star_trek = Series(1, 1, "Star Trek", 1999, 'S-F')
+    # it.views = 10
+    # it.play(3)
+    # simpsons.play()
+    # print(it)
+    # print(it.views)
+    # print(simpsons)
+    # print(simpsons.views)
     # films_catalogue = []
     add_to_list(it)
     add_to_list(simpsons)
     add_to_list(simpsons2)
     add_to_list(mash)
-    print(films_catalogue)
+    add_to_list(hellraiser)
+    add_to_list(pulp_fiction)
+    add_to_list(monty_python)
+    add_to_list(star_trek)
+    # print(films_catalogue)
     # print(isinstance(it, Films))
-    for i in films_catalogue:
-        print("%s" % (i))
+    # for i in films_catalogue:
+    #   print("%s" % (i))
     # print(type(films_catalogue))
-    get_movies()
-    print(get_movies())
-    print(get_series())
-    print(search('It'))
-    print(search('jakiś film'))
-    print(search('The Simpsons'))
+    # get_movies()
+    # print(get_movies())
+    # print(get_series())
+    # print(search('It'))
+    # print(search('jakiś film'))
+    # print(search('The Simpsons'))
     generate_views_10()
-    for i in films_catalogue:
-        print(i, i.views)
+    # for i in films_catalogue:
+    #    print(i, i.views)
 
-    print(top_titles(2))
+    print("Biblioteka filmów %d rekordów \nNajpopularniejsze filmy i seriale dnia %s: \n %s" %
+          (len(films_catalogue), today, top_titles(3)))
