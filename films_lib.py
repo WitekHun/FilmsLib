@@ -1,7 +1,3 @@
-import random
-from datetime import date
-today = date.today()
-
 
 class Films:
     def __init__(self, title, year, genre):
@@ -55,16 +51,16 @@ class Series(Films):
     def __str__(self):
         return f'"{self.title}" S{self.season:02d}E{self.episode:02d} ({self.year})'
 
+# hash dodany po zdefiniowaniu __eq__ domyślny nie działał, potrzebny do usuwania zduplikowanych wpisów w liście
     def __hash__(self):
         return hash(self.title)+hash(self.year)+hash(self.genre)+hash(self.episode)+hash(self.season)
 
     def __eq__(self, other):
         return all((self.title == other.title, self.year == other.year, self.genre == other.genre, self.episode == other.episode, self.season == other.season))
 
-
-def episode_number(series_name):
-    x = search(series_name)
-    return len(x)
+    def episode_number(series_name):
+        x = search(series_name)
+        return len(x)
 # films_catalogue = []
 
 
@@ -88,7 +84,7 @@ def split_films():
     movies_list = []
     series_list = []
     for i in films_catalogue:
-        if isinstance(i, Films) and isinstance(i, Series) == False:
+        if type(i) == Films:
             movies_list.append(i)
         else:
             series_list.append(i)
@@ -158,21 +154,27 @@ def number_of_episodes(serie, season=0):
         if isinstance(search(serie)[0], Series):
             return len(search(serie))
         else:
-            print("%s nie jest serialem" % (serie))
+            return f"{serie} nie jest serialem"
     elif isinstance(search_serie(serie, season)[0], Series):
         return len(search_serie(serie, season))
     else:
-        print("%s nie jest serialem" % (serie))
+        return f"{serie} nie jest serialem"
 
 
 def catalogue_cleaner(list_name):
     # removes duplicates from list of objects
+    # może nie konieczne, poza tym można to poprostu wpisać z palca, ale tak mi szybciej było
     list_name = list(dict.fromkeys(list_name))
     return list_name
 
 
 if __name__ == "__main__":
-    films_catalogue = []
+
+    import random
+    from datetime import date
+    today = date.today()
+    films_catalogue = [Films("Chłopaki nie płaczą", 2000, 'comedy')]
+
     add_season("Firefly", 1, 15, 2002, "S-F")
     add_season("Monty Python's Flying Circus", 1, 13, 1969, 'comedy')
     add_season("Monty Python's Flying Circus", 2, 13, 1970, 'comedy')
@@ -187,7 +189,7 @@ if __name__ == "__main__":
     films_catalogue.append(Films('It', 1989, 'horror'))
     films_catalogue.append(Series(1, 3, 'The Simpsons', 2000, 'comedy'))
     films_catalogue.append(Series(2, 3, 'The Simpsons', 2000, 'comedy'))
-    films_catalogue.append(Series(1, 1, "M.A.S.H.", 1972, 'comedy'))
+    films_catalogue.append(Series(1, 1, 'M.A.S.H.', 1972, 'comedy'))
     films_catalogue.append(Films("Pulp Fiction", 1994, 'crime'))
     films_catalogue.append(Films('Life of Brian', 1979, 'comedy'))
     films_catalogue.append(Series(1, 1, "Star Trek", 1999, 'S-F'))
@@ -224,13 +226,21 @@ if __name__ == "__main__":
     print(type(simpson_list[0]), type(it_list[0]))
     print(list(dict.fromkeys(it_list)))
     print(hash(simpson_list[0]))
-    
+
     print(number_of_episodes('M.A.S.H.'))
     print(number_of_episodes('M.A.S.H.', 2))
     print(number_of_episodes('It'))
     print(number_of_episodes("Monty Python's Flying Circus", 1))
     print(number_of_episodes("Monty Python's Flying Circus", 4))
-    
+
     print(search_serie('The Simpsons', 3))
     print(top_titles(5))
+    
+    print(number_of_episodes('It'))
+    print(number_of_episodes('M.A.S.H.'))
+    print(number_of_episodes('M.A.S.H.', 2))
+    print(type(search('M.A.S.H.')[0]) == Series)
+    print(get_movies())
     """
+    # print("!!!!!!!!!!!!!!!!" '\n', type(films_catalogue[0]))
+    # print("GLOBALNE!!!!!!!!!!!: " '\n', globals())
