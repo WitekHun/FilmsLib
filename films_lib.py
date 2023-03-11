@@ -76,11 +76,12 @@ class Series(Films):
             )
         )
 
-    def episode_number(series_name):
-        x = search(series_name)
+    def episode_number(series_name, catalogue):
+        x = search(series_name, catalogue)
         return len(x)
 
 
+"""
 def split_films(catalogue):
     movies_list = []
     series_list = []
@@ -92,16 +93,23 @@ def split_films(catalogue):
     return sorted(movies_list, key=lambda movie: movie.title), sorted(
         series_list, key=lambda movie: movie.title
     )
+"""
 
 
 def get_movies(catalogue):
-    x = split_films(catalogue)
-    return x[0]
+    movies_list = []
+    for i in catalogue:
+        if type(i) == Films:
+            movies_list.append(i)
+    return sorted(movies_list, key=lambda movie: movie.title)
 
 
 def get_series(catalogue):
-    x = split_films(catalogue)
-    return x[1]
+    series_list = []
+    for i in catalogue:
+        if type(i) == Series:
+            series_list.append(i)
+    return sorted(series_list, key=lambda movie: movie.title)
 
 
 def search(film, catalogue):
@@ -121,7 +129,7 @@ def search_serie(serie, catalogue, season=1):
 
 
 def generate_views(catalogue):
-    x = catalogue[random.randint(0, len(films_catalogue) - 1)]
+    x = random.choice(catalogue)
     return x.play(random.randint(1, 100))
 
 
@@ -132,14 +140,20 @@ def generate_views_10(catalogue):
         generate_views(catalogue)
 
 
-def top_titles(number, catalogue, content_type="Any"):
-    x = split_films(catalogue)
-    if content_type == Films:
-        sorted_cat = sorted(x[0], key=lambda film: film.views, reverse=True)
-    elif content_type == Series:
-        sorted_cat = sorted(x[1], key=lambda film: film.views, reverse=True)
+def top_titles(number, catalogue, content_type=""):
+    top_list = []
+    if content_type == "films":
+        for i in catalogue:
+            if type(i) != Series:
+                top_list.append(i)
+        sorted_cat = sorted(top_list, key=lambda film: film.views, reverse=True)
+    elif content_type == "series":
+        for i in catalogue:
+            if type(i) == Series:
+                top_list.append(i)
+        sorted_cat = sorted(top_list, key=lambda film: film.views, reverse=True)
     else:
-        sorted_cat = sorted(films_catalogue, key=lambda film: film.views, reverse=True)
+        sorted_cat = sorted(catalogue, key=lambda film: film.views, reverse=True)
     return sorted_cat[:number]
 
 
@@ -208,8 +222,8 @@ if __name__ == "__main__":
             today.day,
             today.month,
             today.year,
-            top_titles(3, films_catalogue, Films),
-            top_titles(3, films_catalogue, Series),
+            top_titles(3, films_catalogue, "films"),
+            top_titles(3, films_catalogue, "series"),
         )
     )
 """
@@ -231,3 +245,7 @@ if __name__ == "__main__":
     print(type(search("M.A.S.H.", films_catalogue)[0]) == Series)
     print(get_movies(films_catalogue))
 """
+# print(type(str(top_titles(3, films_catalogue, "films"))))
+# print(str(top_titles(3, films_catalogue, "films")))
+# print(str(top_titles(3, films_catalogue, "series")))
+# print(get_movies(films_catalogue))
