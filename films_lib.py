@@ -81,35 +81,24 @@ class Series(Films):
         return len(x)
 
 
-"""
-def split_films(catalogue):
-    movies_list = []
-    series_list = []
+def split_films(catalogue, typ):
+    films_list = []
     for i in catalogue:
-        if type(i) == Films:
-            movies_list.append(i)
+        if type(i) == typ:
+            films_list.append(i)
         else:
-            series_list.append(i)
-    return sorted(movies_list, key=lambda movie: movie.title), sorted(
-        series_list, key=lambda movie: movie.title
-    )
-"""
+            pass
+    return sorted(films_list, key=lambda movie: movie.title)
 
 
 def get_movies(catalogue):
-    movies_list = []
-    for i in catalogue:
-        if type(i) == Films:
-            movies_list.append(i)
-    return sorted(movies_list, key=lambda movie: movie.title)
+    result = split_films(catalogue, Films)
+    return result
 
 
 def get_series(catalogue):
-    series_list = []
-    for i in catalogue:
-        if type(i) == Series:
-            series_list.append(i)
-    return sorted(series_list, key=lambda movie: movie.title)
+    result = split_films(catalogue, Series)
+    return result
 
 
 def search(film, catalogue):
@@ -141,6 +130,10 @@ def generate_views_10(catalogue):
 
 
 def top_titles(number, catalogue, content_type=""):
+    """Returns top titles:
+    :parm number: number of first top titles
+    :parm content_type: series or films, empty for all
+    """
     top_list = []
     if content_type == "films":
         for i in catalogue:
@@ -249,3 +242,4 @@ if __name__ == "__main__":
 # print(str(top_titles(3, films_catalogue, "films")))
 # print(str(top_titles(3, films_catalogue, "series")))
 # print(get_movies(films_catalogue))
+print(get_movies(films_catalogue))
