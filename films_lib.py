@@ -156,7 +156,6 @@ def top_titles(number, catalogue, content_type=""):
     :parm number: number of first top titles
     :parm content_type: series or films, empty for all
     """
-    top_list = []
     if content_type == "films":
         top_list = get_movies(catalogue)
     elif content_type == "series":
