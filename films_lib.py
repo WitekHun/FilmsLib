@@ -76,9 +76,10 @@ class Series(Films):
             )
         )
 
-    def episode_number(series_name, catalogue):
-        x = search(series_name, catalogue)
-        return len(x)
+
+def episode_number(series_name, catalogue):
+    x = search(series_name, catalogue)
+    return len(x)
 
 
 def split_films(catalogue, typ):
@@ -86,8 +87,6 @@ def split_films(catalogue, typ):
     for i in catalogue:
         if type(i) == typ:
             films_list.append(i)
-        else:
-            pass
     return sorted(films_list, key=lambda movie: movie.title)
 
 
@@ -129,11 +128,12 @@ def generate_views_10(catalogue):
         generate_views(catalogue)
 
 
+"""
 def top_titles(number, catalogue, content_type=""):
-    """Returns top titles:
+    '''Returns top titles:
     :parm number: number of first top titles
     :parm content_type: series or films, empty for all
-    """
+    '''
     top_list = []
     if content_type == "films":
         for i in catalogue:
@@ -147,6 +147,23 @@ def top_titles(number, catalogue, content_type=""):
         sorted_cat = sorted(top_list, key=lambda film: film.views, reverse=True)
     else:
         sorted_cat = sorted(catalogue, key=lambda film: film.views, reverse=True)
+    return sorted_cat[:number]
+"""
+
+
+def top_titles(number, catalogue, content_type=""):
+    """Returns top titles:
+    :parm number: number of first top titles
+    :parm content_type: series or films, empty for all
+    """
+    top_list = []
+    if content_type == "films":
+        top_list = get_movies(catalogue)
+    elif content_type == "series":
+        top_list = get_series(catalogue)
+    else:
+        top_list = catalogue
+    sorted_cat = sorted(top_list, key=lambda film: film.views, reverse=True)
     return sorted_cat[:number]
 
 
@@ -242,4 +259,4 @@ if __name__ == "__main__":
 # print(str(top_titles(3, films_catalogue, "films")))
 # print(str(top_titles(3, films_catalogue, "series")))
 # print(get_movies(films_catalogue))
-print(get_movies(films_catalogue))
+# print(get_movies(films_catalogue))
